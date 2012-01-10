@@ -1,0 +1,20 @@
+{
+  "name": "Shhhhh...!",
+  "version": "1.0",
+  "description": "Google Chrome Extention for Interview Street. By:WakeUP",
+  "page_action": {
+	"default_icon": "icon.png", 
+	"default_title": "Shhhhh...!",
+	"default_popup": "dialog.html" 
+  },
+  "options_page": "dialog.html",
+  "permissions": [
+	"webRequestBlocking",
+	"webRequest",
+	"tabs",
+	"*://mail.google.com/*"
+  ],
+  "background_page": "bg.html"
+}
+
+

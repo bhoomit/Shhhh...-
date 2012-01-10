@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<script>
+var mins = 0;
+var clock;
+function showExtLogo(tabId, changeInfo, tab) {
+  if (tab.url.indexOf('mail.google.com') > -1) {
+    chrome.pageAction.show(tabId);
+  }
+};
+chrome.tabs.onUpdated.addListener(showExtLogo);
+
+var blockRequestHandler = function(request) { 
+	console.log("Blocking Request : " + request.url); 
+	return {cancel: true}; 
+}
+
+function addEventHandler(){
+	console.log("Adding Event Handler");
+	chrome.webRequest.onBeforeRequest.addListener(
+		  blockRequestHandler,
+		  {urls: ["*://mail.google.com/mail/\?*search=mbox*" ,
+			    "*://mail.google.com/mail/\?*search=inbox*" ]},
+		  ["blocking"]);
+		  setTimeout(removeListener, mins * 60 * 1000);
+}
+function removeEventHandler(status)
+{
+	chrome.webRequest.onBeforeRequest.removeListener(blockRequestHandler);
+    console.log("Event Handler Removed");
+	if(!status)
+	{
+	   console.log("Add EventHandler after 2 mins");
+	   setTimeout( addEventHandler,2 * 60 * 1000);
+	}
+}
+</script>

@@ -1,0 +1,58 @@
+<html>
+<head>
+	<script type="text/javascript">
+	
+		var bgPage = chrome.extension.getBackgroundPage();
+		var mins = 3;
+		function changeMin(){
+				document.getElementById('range').innerHTML=document.getElementById('timeBox').value;
+		}
+		
+		 function enableExtention() {
+			bgPage.addEventHandler();
+		 }
+		 function disableExtantion() {
+			bgPage.removeListener("disable");
+		 }
+		 function savePreferences(){
+			mins = document.getElementById("timeBox").value;
+			bgPage.mins = mins;
+			localStorage["mins"] = mins;
+			updateStatus("Preferances Saved!");
+		 }
+		 function loadPreferences() {
+			mins = parseInt(localStorage["mins"])
+			bgPage.mins = mins;
+			if(mins){
+				document.getElementById("timeBox").value = mins;
+			}else{
+				document.getElementById("timeBox").value =  3;
+			}
+			changeMin();
+			updateStatus("Saved Preferances Loaded!");
+		 }
+		function updateStatus(msg){
+			  var statusBox = document.getElementById("statusBox");
+			  statusBox.innerHTML = msg;
+			  setTimeout(function() {
+			    statusBox.innerHTML = "";
+			  }, 1000); 
+		}
+	 </script>
+</head>
+<body onload="loadPreferences()">
+	<table>
+		<tr>
+			  <td><input type="range"  min="3" max="100" id="timeBox" value="3" onchange="changeMin()"/><span id="range">0</span></td>
+			  <td><input type="button" value="Save" onClick="savePreferences()" /></td>
+		</tr>
+		<tr>
+			 </td><input type="button" value="Enable" onClick="enableExtention()" /></td>
+			 </td><input type="button" value="Disable" onClick="enableExtention()" />&nbsp;&nbsp;&nbsp;&nbsp;<a style="float:right;" href="javascript:window.close()">X</a></td>
+		</tr>
+		<tr>
+			<td><span id="statusBox" /></td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Chrome extention to limit refresh rate in gmail web client.
